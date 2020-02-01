@@ -22,6 +22,10 @@ class Main extends CI_Controller {
 	{
 		$this->login();
 	}
+	public function test()
+	{
+		echo 'test';
+	}
 	public function login(){
 		$this->load->view('login');
 	}
@@ -89,7 +93,7 @@ class Main extends CI_Controller {
 			$this->load->model("model_users");
 
 			//送信元の情報
-			$this->email->from("w9tow9@gmail.com", "送信元");
+			$this->email->from("example@gmail.com", "送信元");
 			//送信先の設定
 			$this->email->to($this->input->post("email"));
 			//タイトルの設定
