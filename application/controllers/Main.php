@@ -27,7 +27,10 @@ class Main extends CI_Controller {
 		echo 'test';
 	}
 	public function login(){
+		$data['title'] = 'ログインページ';
+		$this->load->view('parts/header',$data);
 		$this->load->view('login');
+		$this->load->view('parts/footer');
 	}
 	public function login_validation(){
 		$this->load->helper('security');
@@ -36,11 +39,7 @@ class Main extends CI_Controller {
 		//フォームバリデーションライブラリはログインバリデーションライブラリ内のみで読み込みます。
 
 		$this->form_validation->set_rules("email", "メール", "required|trim|xss_clean|callback_validate_credentials");	//Email入力欄のバリデーション設定
-		//$this->form_validation->set_rules("email", "メール", "required|trim|xss_clean");	//Email入力欄のバリデーション設定
-		//$this->form_validation->set_rules("email", "メール", "required|trim");	//Email入力欄のバリデーション設定
 		$this->form_validation->set_rules("password", "パスワード", "required|md5|trim");	//パスワード入力欄のバリデーション設定
-
-
 
 		if($this->form_validation->run()){	//バリデーションエラーがなかった場合の処理
 			$data = array(
@@ -50,20 +49,29 @@ class Main extends CI_Controller {
 			$this->session->set_userdata($data);
 			redirect("main/members");
 		}else{							//バリデーションエラーがあった場合の処理
+			$data['title'] = 'ログインページ';
+			$this->load->view('parts/header',$data);
 			$this->load->view("login");
+			$this->load->view('parts/footer');
 		}
 
 
 	}
 	public function members(){
 		if($this->session->userdata("is_logged_in")){
+			$data['title'] = 'メンバーページ';
+			$this->load->view('parts/header',$data);
 			$this->load->view("members");
+			$this->load->view('parts/footer');
 		}else{
 			redirect ("main/restricted");
 		}
 	}
 	public function restricted(){
+		$data['title'] = 'アクセス権限がありません';
+		$this->load->view('parts/header',$data);
 		$this->load->view("restricted");
+		$this->load->view('parts/footer');
 	}
 	//ログアウト
 	public function logout(){
@@ -72,7 +80,10 @@ class Main extends CI_Controller {
 	}
 	//会員登録
 	public function signup(){
+		$data['title'] = '会員登録ページ';
+		$this->load->view('parts/header',$data);
 		$this->load->view("signup");
+		$this->load->view('parts/footer');
 	}
 	//会員登録時のバリデーション
 	public function signup_validation(){
@@ -117,7 +128,10 @@ class Main extends CI_Controller {
 
 		}else{
 			echo "問題が発生したため表示できません。";
+			$data['title'] = '会員登録ページ';
+			$this->load->view('parts/header',$data);
 			$this->load->view("signup");
+			$this->load->view('parts/footer');
 		}
 	}
 
@@ -126,7 +140,6 @@ class Main extends CI_Controller {
 
 		if($this->model_users->is_valid_key($key)){	//キーが正しい場合は、以下を実行
 			if($newemail = $this->model_users->add_user($key)){	//add_usersがTrueを返したら以下を実行
-				//echo "success";
 				$data = array(
 					"email" => $newemail,
 					"is_logged_in" => 1

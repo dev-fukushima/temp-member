@@ -1,0 +1,188 @@
+@mixin t($size:14,$lh:24,$ls:60,$b:400){
+  font-size:($size*.1)+rem;
+  letter-spacing: ($ls * .001)+em;
+  @if $lh == 1 {
+    line-height: 1;
+  }@else {
+    line-height: ($lh/$size);
+  }
+  @if $b == bold{
+    font-weight: 600;
+  }@elseif $b == normal {
+    font-weight: 400;
+  }@else {
+    font-weight: $b;
+  }
+}
+@mixin ts($size:24,$lh:32,$ls:60,$b:400){
+  font-size:(($size*.5)*.1)+rem;
+  letter-spacing: (($ls*.5) * .001)+em;
+  @if $lh == 1 {
+    line-height: 1;
+  }@else {
+    line-height: ($lh/$size);
+  }
+  @if $b == bold{
+    font-weight: 600;
+  }@elseif $b == normal {
+    font-weight: 400;
+  }@else {
+    font-weight: $b;
+  }
+}
+// 疑似要素背景画像指定
+@mixin bf($width,$height,$top:"",$right:"",$bottom:"",$left:"",$col:"",$src:"") {
+  &:before{
+  content:"";
+  width:$width;
+  height:$height;
+  display: inline-block;
+  @if $src != "" {
+    @if $col == "" {
+      background:url($src)no-repeat center center;
+    }@else {
+      background:$col url($src)no-repeat center center;
+    }
+  }@else{
+    background:$col no-repeat center center;
+  }
+  background-size:100% auto;
+  @if $top != "" {
+  top:$top;
+  }
+  @if $left !="" {
+  left:$left;
+  }
+  @if $bottom !="" {
+  bottom:$bottom;
+  }
+  @if $right !="" {
+  right:$right;
+  }
+  position: absolute;
+  z-index: 10;
+  }
+}
+@mixin af($width,$height,$top:"",$right:"",$bottom:"",$left:"",$col:"",$src:"") {
+  &:after{
+  content:"";
+  width:$width;
+  height:$height;
+  display: inline-block;
+  @if $src != ""{
+    @if $col == "" {
+      background:url($src)no-repeat center center;
+    }@else {
+      background:$col url($src)no-repeat center center;
+    }
+    background-size:100% auto;
+  }@else{
+    background:$col no-repeat center center;
+  }
+  @if $top != "" {
+  top:$top;
+  }
+  @if $left !="" {
+  left:$left;
+  }
+  @if $bottom !="" {
+  bottom:$bottom;
+  }
+  @if $right !="" {
+  right:$right;
+  }
+  position: absolute;
+  z-index: 10;
+  }
+}
+@mixin rect($w:0,$h:0,$top:'',$right:'',$bottom:'',$left:'',$bgcol:'',$bgsrc:''){
+  width:$w;
+  height:$h;
+  display: inline-block;
+  @if $bgcol !="" {
+    background-color:$bgcol;
+  }
+  @if $bgsrc !="" {
+    background:url($bgsrc) no-repeat center center;
+    background-size: 100% auto;
+  }
+  @if $top != "" {
+  top:$top;
+  }
+  @if $left !="" {
+  left:$left;
+  }
+  @if $bottom !="" {
+  bottom:$bottom;
+  }
+  @if $right !="" {
+  right:$right;
+  }
+}
+// フォントサイズ設定
+@function p2r($value) {
+  @return $value / 10 * 1rem;
+}
+
+%yugo{
+  font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体","NotoSansCJKjp", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
+}
+%noto{
+  font-family: 'NotoSansCJKjp';
+}
+
+@mixin cond($str:''){
+  display: inline-block;
+  @if($str == 'r'){
+    content:"ú";
+  }@else if($str == 'd'){
+    content:"û";
+  }@else if($str == 'l'){
+    content:"ù";
+  }@else if($str == 'u'){
+    content:"ü";
+  }@else{
+    content:"#{$str}";
+  }
+  font-family: 'CONDENSEicon';
+}
+
+@function v($px){
+  @return ($px / 750 * 100vw);
+}
+
+@mixin easing($prop:all,$duration:.8s,$easing:ease){
+-webkit-transition: all $duration $easing;
+-moz-transition: all $duration $easing;
+  -o-transition: all $duration $easing;
+ transition: all $duration $easing;
+}
+
+%cf{
+  content:" ";
+  display:block;
+  clear:both;
+}
+%html{
+  font-size: 62.5%!important;
+  overflow: auto;
+}
+%body-ip5{
+  font-size: 1.4rem!important;
+  text-align: center;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-text-size-adjust:100%;
+}
+%body{
+  font-size: 1.0rem!important;
+  text-align: center;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-text-size-adjust:100%;
+}
+%fade{
+  -webkit-transition:all .4s ease;
+  -o-transition:all .4s ease;
+  transition:all .4s ease;
+}
